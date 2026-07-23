@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+### http://127.0.0.1:8000/api/courses/
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',  # Add Django Rest Framework
-    'courses',  # Add your app
+    'courses',  # Added courses app
 ]
 
 # Allows testing API interactively using a web browser and view responses in different formats.
