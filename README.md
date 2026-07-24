@@ -1,28 +1,15 @@
-# LMS Project
+## Overview
 
-A simple Django-based learning management system project.
+To build a full-stack Learning Management System (LMS) where students can enroll in
+courses, The project will involve building a Django backend, creating an API with Django
+Rest Framework, and integrating a React frontend, using SQLite as the database. This
+project demonstrates your understanding and application of Python, Django, SQL,
+JavaScript, and React, along with HTML and CSS for structure and styling.
 
-## Structure
+A simple full-stack Django-based learning management system project, using SQLite as the database.
+While using Rest Framework and a React frontend along with HTML and CSS for structure and styling.
 
-- backend/: Django project and app code
-- frontend/: frontend workspace
-
-## Setup
-
-<<<<<<< Updated upstream
-1. Navigate to the backend folder.
-2. Create and activate a virtual environment.
-3. Install dependencies:
-   ```bash
-   pip install django
-   ```
-4. Run migrations and start the server:
-   ```bash
-   python manage.py migrate
-   python manage.py runserver
-   ```
-=======
-## User Stories
+## Introduction
 
 - WIP
 

@@ -26,3 +26,6 @@ Thumbs.db
 node_modules/
 build/
 dist/
+
+# Local test/tooling outputs
+backend/*.txt
