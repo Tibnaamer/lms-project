@@ -1,0 +1,1 @@
+# package initializer for courses.user

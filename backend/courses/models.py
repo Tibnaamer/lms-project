@@ -1,13 +1,16 @@
 from django.conf import settings
 from django.db import models
 
+# Ensure custom User model is registered on the 'courses' app label
+from .user.models import User
+
 class Course(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=600)
     author = models.CharField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.name
+        return self.title
 
 class UserProfile(models.Model):
     ROLE_CHOICES = [
