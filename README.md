@@ -57,3 +57,7 @@ While using Rest Framework and a React frontend along with HTML and CSS for stru
 ## Credits
 
 * WIP
+
+TO DO 
+
+Adding routes
