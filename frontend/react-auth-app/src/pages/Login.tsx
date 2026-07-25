@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import authSlice from "../store/slices/auth";
 
 // is the login page component for the react authentication app, the component manages the login state, handles form submission,
 function Login() {
@@ -12,24 +13,28 @@ function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleLogin = async (email: string, password: string) => {
-    try {
-      setMessage("");
-      const res = await axios.post("/api/auth/login/", { email, password });
+  const apiUrl = process.env.REACT_APP_API_URL || "";
 
-      // dispatch a generic login action — adapt to your store
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-
-      // navigate to home/dashboard after successful login
-      history.push("/");
-    } catch (err: any) {
-      const errMsg =
-        err?.response?.data?.message || err.message || "Login failed";
-      setMessage(errMsg);
-    } finally {
-      setLoading(false);
-    }
+  const handleLogin = (email: string, password: string) => {
+    axios
+      .post(`${apiUrl}/auth/login/`, { email, password })
+      .then((res) => {
+        dispatch(
+          authSlice.actions.setAuthTokens({
+            token: res.data.access,
+            refreshToken: res.data.refresh,
+          }),
+        );
+        dispatch(authSlice.actions.setAccount(res.data.user));
+        setLoading(false);
+        history.push("/");
+      })
+      .catch((err) => {
+        setLoading(false);
+        setMessage(err?.response?.data?.detail?.toString() || "Login failed");
+      });
   };
+
   // formik is used to manage the form state and validation
   const formik = useFormik({
     initialValues: {

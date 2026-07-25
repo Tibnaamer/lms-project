@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth import authenticate
 
 from courses.user.serializers import UserSerializer
 from courses.user.models import User
@@ -22,7 +21,7 @@ class LoginSerializer(serializers.Serializer):
         if not user.check_password(password):
             raise serializers.ValidationError('Invalid credentials')
 
-        return {'user': UserSerializer(user).data}
+        return {'user': user}
 
 class RegisterSerializer(UserSerializer):
     password = serializers.CharField(max_length=128, min_length=8, write_only=True, required=True)

@@ -1,14 +1,26 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import authSlice from "../store/slices/auth";
+import useSWR from "swr";
+import { fetcher } from "../utils/axios";
+import { RootState } from "../store";
 
-// is the profile page component for the react authentication app, the component manages the logout state/submission,
 const Profile = () => {
+  const account = useSelector((state: RootState) => state.auth.account);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const userId = account?.id;
+
+  const { data: user } = useSWR<any>(
+    userId ? `/user/${userId}/` : null,
+    fetcher,
+  );
+
   const handleLogout = () => {
-    //
+    dispatch(authSlice.actions.setLogout());
+    history.push("/login");
   };
   return (
     <div className="w-full h-screen">
@@ -20,9 +32,13 @@ const Profile = () => {
           Deconnexion
         </button>
       </div>
-      <div className="w-full h-full text-center items-center">
-        <p className="self-center my-auto">Welcome</p>
-      </div>
+      {user ? (
+        <div className="w-full h-full text-center items-center">
+          <p className="self-center my-auto">Welcome, {user.username}</p>
+        </div>
+      ) : (
+        <p className="text-center items-center">Loading ...</p>
+      )}
     </div>
   );
 };
