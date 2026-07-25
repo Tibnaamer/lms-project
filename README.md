@@ -11,23 +11,25 @@ While using Rest Framework and a React frontend along with HTML and CSS for stru
 
 ## Introduction
 
-- WIP
+* WIP
 
 ## Features
 
-To be added:
+* WIP
 
-Students:
+### To be added:
+
+#### Students:
 
 - Can browse available courses
 - Enroll and access a list of courses they are enrolled in
 - Signup, Login and logout
 
-Teachers:
+#### Teachers:
 
 - Can create and manage courses
 
-Admins:
+#### Admins:
 
 - Can create and manage courses, as well as manage users
 
@@ -54,4 +56,4 @@ Admins:
 
 ## Credits
 
-- WIP
+* WIP
