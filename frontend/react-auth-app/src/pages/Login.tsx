@@ -6,7 +6,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import authSlice from "../store/slices/auth";
 
-// is the login page component for the react authentication app, the component manages the login state, handles form submission,
+// is the login page component for the react authentication app, the component manages the login state, handles form submission.
 function Login() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,6 +15,7 @@ function Login() {
 
   const apiUrl = process.env.REACT_APP_API_URL || "";
 
+  // handleLogin function is used to send a login request to the backend API as well as handle the response.
   const handleLogin = (email: string, password: string) => {
     axios
       .post(`${apiUrl}/auth/login/`, { email, password })
@@ -51,6 +52,7 @@ function Login() {
     }),
   });
 
+  // Component renders a login form with email and password fields, as well as a submit button, displays error messages that may occur during the login process.
   return (
     <div className="h-screen flex bg-gray-bg1">
       <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">

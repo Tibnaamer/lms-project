@@ -4,8 +4,10 @@ import { useHistory } from "react-router-dom";
 import authSlice from "../store/slices/auth";
 import useSWR from "swr";
 import { fetcher } from "../utils/axios";
+import { AccountResponse } from "../types";
 import { RootState } from "../store";
 
+// Profile component displays the user's profile information and provides a logout button.
 const Profile = () => {
   const account = useSelector((state: RootState) => state.auth.account);
   const dispatch = useDispatch();
@@ -13,11 +15,12 @@ const Profile = () => {
 
   const userId = account?.id;
 
-  const { data: user } = useSWR<any>(
+  const { data: user } = useSWR<AccountResponse | null>(
     userId ? `/user/${userId}/` : null,
     fetcher,
   );
 
+  // handleLogout function used to log the user out by sending the setLogout action and redirecting to the login page.
   const handleLogout = () => {
     dispatch(authSlice.actions.setLogout());
     history.push("/login");

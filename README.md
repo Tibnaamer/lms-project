@@ -11,13 +11,13 @@ While using Rest Framework and a React frontend along with HTML and CSS for stru
 
 ## Introduction
 
-* WIP
+- WIP
 
 ## Features
 
-* WIP
+- WIP
 
-### To be added:
+## To be added:
 
 #### Students:
 
@@ -44,20 +44,23 @@ While using Rest Framework and a React frontend along with HTML and CSS for stru
 
 ## Validation
 
-* WIP
+- WIP
 
 ## Accessibility
 
-* WIP
+- WIP
 
 ## Deployment
 
-* WIP
+- WIP
 
 ## Credits
 
-* WIP
+- WIP
 
-TO DO 
+## Setup
 
-Adding routes
+# Migrate and Start the server
+
+python manage.py migrate
+python manage.py runserver
