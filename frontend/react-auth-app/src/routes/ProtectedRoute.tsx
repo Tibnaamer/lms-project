@@ -5,17 +5,15 @@ import { RootState } from "../store";
 
 // This component checks if the user is authenticated and redirects to login page if not authenticated
 const ProtectedRoute = (props: RouteProps) => {
-  const auth = useSelector((state: RootState) => state.auth);
+  const account = useSelector((state: RootState) => state.auth.account);
 
-  if (auth.account) {
+  if (account) {
     if (props.path === "/login") {
       return <Redirect to={"/"} />;
     }
     return <Route {...props} />;
-  } else if (!auth.account) {
-    return <Redirect to={"/login"} />;
   } else {
-    return <div>Not found</div>;
+    return <Redirect to={"/login"} />;
   }
 };
 

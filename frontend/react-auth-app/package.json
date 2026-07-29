@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.1.0",
+    "@reduxjs/toolkit": "^2.6.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
@@ -17,7 +19,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.3.0",
-    "@reduxjs/toolkit": "^1.9.5",
     "redux-persist": "^6.0.0",
     "react-router-dom": "^5.3.4",
     "swr": "^2.3.0",
@@ -53,5 +54,9 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
     "@types/react-redux": "^7.1.26"
+  },
+  "overrides": {
+    "ajv": "^8.17.1",
+    "ajv-keywords": "^5.1.0"
   }
 }
