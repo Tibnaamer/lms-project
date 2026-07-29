@@ -41,6 +41,7 @@ While using Rest Framework and a React frontend along with HTML and CSS for stru
 - HTML was used as the foundation/structure of my site
 - CSS was used to style and edit the layout of my site
 - Django was used to build the backend
+- React was used to build the frontend
 
 ## Validation
 
@@ -65,8 +66,7 @@ While using Rest Framework and a React frontend along with HTML and CSS for stru
 python manage.py migrate
 python manage.py runserver
 
-
---------------------------------------------
+---
 
 # Getting Started with Create React App
 

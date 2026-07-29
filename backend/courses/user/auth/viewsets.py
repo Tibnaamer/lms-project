@@ -6,7 +6,7 @@ from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from courses.user.auth.serializers import LoginSerializer, RegisterSerializer
 from courses.user.serializers import UserSerializer
 
-
+# ViewSets for user authentication
 class LoginViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
@@ -25,7 +25,7 @@ class LoginViewSet(viewsets.ViewSet):
             status=status.HTTP_200_OK,
         )
 
-
+# ViewSet for user registration
 class RegistrationViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
@@ -33,11 +33,13 @@ class RegistrationViewSet(viewsets.ViewSet):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        return Response({'user': RegisterSerializer(user).data}, status=status.HTTP_201_CREATED)
+        return Response({'user': UserSerializer(user).data}, status=status.HTTP_201_CREATED)
 
-
+# ViewSet for refreshing JWT tokens
 class RefreshViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
     def create(self, request, *args, **kwargs):
-        return Response({}, status=status.HTTP_200_OK)
+        serializer = TokenRefreshSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)

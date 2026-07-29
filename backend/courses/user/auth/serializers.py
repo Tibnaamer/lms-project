@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from courses.user.serializers import UserSerializer
 from courses.user.models import User
 
-
+# Serializer for user login
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     password = serializers.CharField(write_only=True)
@@ -23,13 +23,15 @@ class LoginSerializer(serializers.Serializer):
 
         return {'user': user}
 
+# Serializer for user registration
 class RegisterSerializer(UserSerializer):
     password = serializers.CharField(max_length=128, min_length=8, write_only=True, required=True)
     email = serializers.EmailField(required=True, write_only=True, max_length=128)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'is_active']
+        fields = ['id', 'username', 'email', 'password', 'is_active', 'role']
+        read_only_fields = ['is_active', 'role']
 
     def create(self, validated_data):
         try:
