@@ -1,5 +1,5 @@
-from courses.user.serializers import UserSerializer
-from courses.user.models import User
+from students.user.serializers import UserSerializer
+from students.user.models import User
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
