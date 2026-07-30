@@ -14,7 +14,7 @@ const Dashboard = () => {
   const account = useSelector((state: RootState) => state.auth.account);
   const userId = account?.id;
 
-// Fetch user data using SWR and update the Redux store on success
+  // Fetch user data using SWR and update the Redux store on success
   const { data: user } = useSWR<AccountResponse | null>(
     userId ? `/user/${userId}/` : null,
     fetcher,
@@ -69,6 +69,11 @@ const Dashboard = () => {
               className="rounded border bg-slate-100 p-4"
             >
               Manage Courses
+            </Link>
+          )}
+          {role === "admin" && (
+            <Link to="/admin/users" className="rounded border bg-slate-100 p-4">
+              Manage Users
             </Link>
           )}
         </div>

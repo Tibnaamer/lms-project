@@ -29,6 +29,7 @@ const Courses = () => {
     }
   };
 
+  // Render the Courses component, including the list of available courses and an enroll button for students.
   return (
     <div className="min-h-screen bg-slate-50 p-6">
       <div className="mx-auto max-w-5xl rounded-xl bg-white p-6 shadow">
@@ -38,7 +39,7 @@ const Courses = () => {
         {!courses && !error && <p>Loading courses...</p>}
 
         <div className="grid gap-4 sm:grid-cols-2">
-          {/* Render each course with an enroll button if the user can enroll */}
+          {/* Render each course with an enroll button if the user can enroll. */}
           {courses?.map((course) => (
             <div key={course.id} className="rounded border p-4">
               <h2 className="text-lg font-semibold">{course.title}</h2>

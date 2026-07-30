@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import authSlice from "../store/slices/auth";
 
 // is the login page component for the react authentication app, the component manages the login state, handles form submission.
@@ -99,6 +99,13 @@ function Login() {
               Login
             </button>
           </div>
+
+          <p className="mt-4 text-center text-sm text-slate-700">
+            New here?{" "}
+            <Link to="/signup" className="text-blue-700">
+              Create account
+            </Link>
+          </p>
         </form>
       </div>
     </div>
