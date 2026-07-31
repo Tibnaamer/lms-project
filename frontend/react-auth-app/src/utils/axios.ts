@@ -3,8 +3,15 @@ import createAuthRefreshInterceptor from "axios-auth-refresh";
 import store from "../store";
 import authSlice from "../store/slices/auth";
 
+const defaultApiUrl =
+  process.env.NODE_ENV === "test" ? "" : "http://127.0.0.1:8000/api";
+const apiUrl = (process.env.REACT_APP_API_URL || defaultApiUrl).replace(
+  /\/+$/,
+  "",
+);
+
 const axiosService = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: apiUrl,
   headers: {
     "Content-Type": "application/json",
   },
@@ -51,7 +58,7 @@ const refreshAuthLogic = async (failedRequest) => {
           refresh: refreshToken,
         },
         {
-          baseURL: process.env.REACT_APP_API_URL,
+          baseURL: apiUrl,
         },
       )
       .then((resp) => {

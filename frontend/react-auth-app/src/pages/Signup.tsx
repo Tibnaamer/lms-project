@@ -5,6 +5,50 @@ import * as Yup from "yup";
 import StatusBanner from "../components/StatusBanner";
 import { authApi } from "../utils/api";
 
+// Function to extract error messages from API responses.
+const getErrorMessage = (err: any): string => {
+  const data = err?.response?.data;
+  const status = err?.response?.status;
+
+  if (!status && typeof err?.message === "string") {
+    if (err.message.toLowerCase().includes("network error")) {
+      return "Cannot reach backend API. Make sure Django is running on http://127.0.0.1:8000.";
+    }
+  }
+
+  if (!data) {
+    return "Could not create account.";
+  }
+
+  if (typeof data.detail === "string") {
+    return data.detail;
+  }
+
+  if (typeof data === "string") {
+    if (data.toLowerCase().includes("<!doctype html")) {
+      return "Signup API endpoint not found. Check REACT_APP_API_URL.";
+    }
+    return data;
+  }
+
+  if (Array.isArray(data) && data.length > 0) {
+    return String(data[0]);
+  }
+
+  if (typeof data === "object") {
+    const firstKey = Object.keys(data)[0];
+    const firstValue = firstKey ? data[firstKey] : null;
+    if (Array.isArray(firstValue) && firstValue.length > 0) {
+      return String(firstValue[0]);
+    }
+    if (typeof firstValue === "string") {
+      return firstValue;
+    }
+  }
+
+  return "Could not create account.";
+};
+
 // Signup component that allows users to create a new account by providing a username, email, and password.
 // It deals with form submission, validation, and displays messages based on the success/failure of the account creation process.
 const Signup = () => {
@@ -37,7 +81,7 @@ const Signup = () => {
         setMessage("Account created. You can now sign in.");
         history.push("/login");
       } catch (err: any) {
-        setMessage(err?.response?.data?.detail || "Could not create account.");
+        setMessage(getErrorMessage(err));
       } finally {
         setLoading(false);
       }
