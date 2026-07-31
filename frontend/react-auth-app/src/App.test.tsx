@@ -1,9 +1,11 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+// Test to ensure that the login page is rendered for unauthenticated users when they access the application.
+test("renders login page for unauthenticated users", async () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(
+    await screen.findByText(/log in to your account/i),
+  ).toBeInTheDocument();
 });

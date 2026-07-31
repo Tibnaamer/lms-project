@@ -4,15 +4,24 @@ import useSWR from "swr";
 import { RootState } from "../store";
 import { CourseResponse, EnrollmentResponse } from "../types";
 import axiosService, { fetcher } from "../utils/axios";
+import PageHeader from "../components/PageHeader";
+import StatusBanner from "../components/StatusBanner";
 
 // TeacherCourses component that allows teachers to manage their courses, including creating and deleting courses.
 const TeacherCourses = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
+  const [messageTone, setMessageTone] = useState<"success" | "error" | "info">(
+    "info",
+  );
   const [editingCourseId, setEditingCourseId] = useState<number | null>(null);
-  const [enrollmentsByCourse, setEnrollmentsByCourse] = useState<Record<number, EnrollmentResponse[]>>({});
-  const [loadingEnrollmentsFor, setLoadingEnrollmentsFor] = useState<number | null>(null);
+  const [enrollmentsByCourse, setEnrollmentsByCourse] = useState<
+    Record<number, EnrollmentResponse[]>
+  >({});
+  const [loadingEnrollmentsFor, setLoadingEnrollmentsFor] = useState<
+    number | null
+  >(null);
 
   const account = useSelector((state: RootState) => state.auth.account);
   const isAdmin = account?.role === "admin";
@@ -44,9 +53,11 @@ const TeacherCourses = () => {
       setTitle("");
       setDescription("");
       setMessage("Course created.");
+      setMessageTone("success");
       mutate();
     } catch (err: any) {
       setMessage(err?.response?.data?.detail || "Failed to create course.");
+      setMessageTone("error");
     }
   };
 
@@ -78,10 +89,12 @@ const TeacherCourses = () => {
         description,
       });
       setMessage("Course updated.");
+      setMessageTone("success");
       cancelEditing();
       mutate();
     } catch (err: any) {
       setMessage(err?.response?.data?.detail || "Failed to update course.");
+      setMessageTone("error");
     }
   };
 
@@ -90,9 +103,11 @@ const TeacherCourses = () => {
     try {
       await axiosService.delete(`/courses/${id}/`);
       setMessage("Course deleted.");
+      setMessageTone("success");
       mutate();
     } catch (err: any) {
       setMessage(err?.response?.data?.detail || "Failed to delete course.");
+      setMessageTone("error");
     }
   };
 
@@ -109,6 +124,7 @@ const TeacherCourses = () => {
       }));
     } catch (err: any) {
       setMessage(err?.response?.data?.detail || "Failed to load enrollments.");
+      setMessageTone("error");
     } finally {
       setLoadingEnrollmentsFor(null);
     }
@@ -118,10 +134,13 @@ const TeacherCourses = () => {
   return (
     <div className="min-h-screen bg-slate-50 p-6">
       <div className="mx-auto max-w-5xl rounded-xl bg-white p-6 shadow">
-        <h1 className="mb-4 text-2xl font-semibold">
-          Teacher Course Management
-        </h1>
-        {message && <p className="mb-3 text-sm text-blue-700">{message}</p>}
+        <PageHeader
+          title="Teacher Course Management"
+          role={account?.role || "teacher"}
+          backTo="/"
+          backLabel="Back to Dashboard"
+        />
+        <StatusBanner message={message} tone={messageTone} />
 
         <form
           onSubmit={editingCourseId ? handleUpdate : handleCreate}
@@ -137,7 +156,9 @@ const TeacherCourses = () => {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder={editingCourseId ? "Edit course description" : "Course description"}
+            placeholder={
+              editingCourseId ? "Edit course description" : "Course description"
+            }
             className="rounded border p-2"
             rows={4}
             required
@@ -162,61 +183,68 @@ const TeacherCourses = () => {
         </form>
 
         {/* Render the list of courses with options to edit, delete, and view enrollments for each course. */}
-        {error && <p className="text-red-600">Failed to load courses.</p>}
+        {error && (
+          <StatusBanner message="Failed to load courses." tone="error" />
+        )}
         {!courses && !error && <p>Loading courses...</p>}
 
         <div className="space-y-3">
           {visibleCourses.map((course) => (
-            <div
-              key={course.id}
-              className="flex items-start justify-between rounded border p-4"
-            >
-              <div>
-                <p className="font-medium">{course.title}</p>
-                <p className="text-sm text-slate-700">{course.description}</p>
-                <p className="text-xs text-slate-500">
-                  Author: {course.author}
-                </p>
+            <React.Fragment key={course.id}>
+              <div className="flex items-start justify-between rounded border p-4">
+                <div>
+                  <p className="font-medium">{course.title}</p>
+                  <p className="text-sm text-slate-700">{course.description}</p>
+                  <p className="text-xs text-slate-500">
+                    Author: {course.author}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <button
+                    className="rounded bg-amber-600 px-3 py-2 text-sm text-white"
+                    onClick={() => startEditing(course)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="rounded bg-red-700 px-3 py-2 text-sm text-white"
+                    onClick={() => handleDelete(course.id)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="rounded bg-blue-700 px-3 py-2 text-sm text-white"
+                    onClick={() => handleLoadEnrollments(course.id)}
+                  >
+                    {loadingEnrollmentsFor === course.id
+                      ? "Loading..."
+                      : "View Enrollments"}
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <button
-                  className="rounded bg-amber-600 px-3 py-2 text-sm text-white"
-                  onClick={() => startEditing(course)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="rounded bg-red-700 px-3 py-2 text-sm text-white"
-                  onClick={() => handleDelete(course.id)}
-                >
-                  Delete
-                </button>
-                <button
-                  className="rounded bg-blue-700 px-3 py-2 text-sm text-white"
-                  onClick={() => handleLoadEnrollments(course.id)}
-                >
-                  {loadingEnrollmentsFor === course.id
-                    ? "Loading..."
-                    : "View Enrollments"}
-                </button>
-              </div>
-            </div>
-            {enrollmentsByCourse[course.id] && (
-              <div className="mt-2 rounded border border-dashed p-3">
-                <p className="mb-2 text-sm font-medium">Enrolled Students</p>
-                {enrollmentsByCourse[course.id].length === 0 ? (
-                  <p className="text-sm text-slate-600">No students enrolled yet.</p>
-                ) : (
-                  <ul className="space-y-1 text-sm text-slate-700">
-                    {enrollmentsByCourse[course.id].map((enrollment) => (
-                      <li key={enrollment.id}>
-                        {enrollment.student_username} - {new Date(enrollment.date_enrolled).toLocaleDateString()}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
+
+              {enrollmentsByCourse[course.id] && (
+                <div className="mt-2 rounded border border-dashed p-3">
+                  <p className="mb-2 text-sm font-medium">Enrolled Students</p>
+                  {enrollmentsByCourse[course.id].length === 0 ? (
+                    <p className="text-sm text-slate-600">
+                      No students enrolled yet.
+                    </p>
+                  ) : (
+                    <ul className="space-y-1 text-sm text-slate-700">
+                      {enrollmentsByCourse[course.id].map((enrollment) => (
+                        <li key={enrollment.id}>
+                          {enrollment.student_username} -{" "}
+                          {new Date(
+                            enrollment.date_enrolled,
+                          ).toLocaleDateString()}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+            </React.Fragment>
           ))}
         </div>
       </div>

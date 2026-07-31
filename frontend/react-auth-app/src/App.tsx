@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
@@ -8,10 +8,12 @@ import { Provider } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import React from "react";
 import Courses from "./pages/Courses";
+import CourseDetail from "./pages/CourseDetail";
 import MyCourses from "./pages/MyCourses";
 import TeacherCourses from "./pages/TeacherCourses";
 import RoleBasedRoute from "./routes/RoleBasedRoute";
 import AdminUsers from "./pages/AdminUsers";
+import PublicOnlyRoute from "./routes/PublicOnlyRoute";
 
 // Main App component that sets up routing and state management for the application.
 export default function App() {
@@ -21,10 +23,15 @@ export default function App() {
         <Router>
           <div>
             <Switch>
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
+              <PublicOnlyRoute exact path="/login" component={Login} />
+              <PublicOnlyRoute exact path="/signup" component={Signup} />
               <ProtectedRoute exact path="/" component={Dashboard} />
               <ProtectedRoute exact path="/courses" component={Courses} />
+              <ProtectedRoute
+                exact
+                path="/courses/:id"
+                component={CourseDetail}
+              />
               <RoleBasedRoute
                 exact
                 path="/my-courses"

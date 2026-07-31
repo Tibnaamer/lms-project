@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
+import StatusBanner from "../components/StatusBanner";
+import { authApi } from "../utils/api";
 
-// Signup component that allows users to create a new account by providing a username, email, and password. 
+// Signup component that allows users to create a new account by providing a username, email, and password.
 // It deals with form submission, validation, and displays messages based on the success/failure of the account creation process.
 const Signup = () => {
   const history = useHistory();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const apiUrl = process.env.REACT_APP_API_URL || "";
 
   const formik = useFormik({
     initialValues: {
@@ -34,7 +33,7 @@ const Signup = () => {
       setMessage("");
 
       try {
-        await axios.post(`${apiUrl}/auth/register/`, values);
+        await authApi.register(values);
         setMessage("Account created. You can now sign in.");
         history.push("/login");
       } catch (err: any) {
@@ -104,7 +103,10 @@ const Signup = () => {
             )}
           </div>
 
-          {message && <p className="text-sm text-slate-700">{message}</p>}
+          <StatusBanner
+            message={message}
+            tone={message.includes("created") ? "success" : "error"}
+          />
 
           <button
             type="submit"

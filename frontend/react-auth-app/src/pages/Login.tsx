@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import authSlice from "../store/slices/auth";
+import StatusBanner from "../components/StatusBanner";
+import { authApi } from "../utils/api";
 
 // is the login page component for the react authentication app, the component manages the login state, handles form submission.
 function Login() {
@@ -13,12 +14,9 @@ function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const apiUrl = process.env.REACT_APP_API_URL || "";
-
-  // handleLogin function is used to send a login request to the backend API as well as handle the response.
   const handleLogin = (email: string, password: string) => {
-    axios
-      .post(`${apiUrl}/auth/login/`, { email, password })
+    authApi
+      .login({ email, password })
       .then((res) => {
         dispatch(
           authSlice.actions.setAuthTokens({
@@ -86,9 +84,7 @@ function Login() {
               <div>{formik.errors.password} </div>
             ) : null}
           </div>
-          <div className="text-danger text-center my-2" hidden={false}>
-            {message}
-          </div>
+          <StatusBanner message={message} tone="error" />
 
           <div className="flex justify-center items-center mt-6">
             <button

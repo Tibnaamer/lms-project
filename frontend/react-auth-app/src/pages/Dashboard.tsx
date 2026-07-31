@@ -6,6 +6,7 @@ import authSlice from "../store/slices/auth";
 import { fetcher } from "../utils/axios";
 import { AccountResponse } from "../types";
 import { RootState } from "../store";
+import PageHeader from "../components/PageHeader";
 
 // Dashboard page component that displays user information and navigation links based on their role.
 const Dashboard = () => {
@@ -40,11 +41,10 @@ const Dashboard = () => {
       <div className="mx-auto max-w-4xl rounded-xl bg-white p-6 shadow">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold">LMS Dashboard</h1>
+            <PageHeader title="LMS Dashboard" role={role} />
             <p className="text-sm text-slate-600">
               {user ? `Welcome ${user.username}` : "Loading user..."}
             </p>
-            <p className="text-sm text-slate-600">Role: {role}</p>
           </div>
           <button
             onClick={handleLogout}

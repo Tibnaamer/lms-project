@@ -2,6 +2,8 @@ import React from "react";
 import useSWR from "swr";
 import { EnrollmentResponse } from "../types";
 import { fetcher } from "../utils/axios";
+import PageHeader from "../components/PageHeader";
+import StatusBanner from "../components/StatusBanner";
 
 // MyCourses page component that displays the courses the user is currently enrolled in.
 const MyCourses = () => {
@@ -10,13 +12,19 @@ const MyCourses = () => {
     fetcher,
   );
 
-// Render the component, including the list of enrolled courses and their enrollment dates.
+  // Render the component, including the list of enrolled courses and their enrollment dates.
   return (
     <div className="min-h-screen bg-slate-50 p-6">
       <div className="mx-auto max-w-4xl rounded-xl bg-white p-6 shadow">
-        <h1 className="mb-4 text-2xl font-semibold">My Enrolled Courses</h1>
+        <PageHeader
+          title="My Enrolled Courses"
+          backTo="/"
+          backLabel="Back to Dashboard"
+        />
 
-        {error && <p className="text-red-600">Failed to load enrollments.</p>}
+        {error && (
+          <StatusBanner message="Failed to load enrollments." tone="error" />
+        )}
         {!data && !error && <p>Loading enrollments...</p>}
 
         {data && data.length === 0 && (

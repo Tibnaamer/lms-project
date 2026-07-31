@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import useSWR from "swr";
 import { RootState } from "../store";
 import { CourseResponse } from "../types";
 import axiosService, { fetcher } from "../utils/axios";
+import PageHeader from "../components/PageHeader";
+import StatusBanner from "../components/StatusBanner";
 
 // Courses page component that displays available courses and allows students to enroll.
 const Courses = () => {
   const [message, setMessage] = useState<string>("");
+  const [messageTone, setMessageTone] = useState<"success" | "error" | "info">(
+    "info",
+  );
   const account = useSelector((state: RootState) => state.auth.account);
 
   const {
@@ -23,9 +29,11 @@ const Courses = () => {
     try {
       await axiosService.post(`/courses/${courseId}/enrollments/`);
       setMessage("Enrolled successfully.");
+      setMessageTone("success");
       mutate();
     } catch (err: any) {
       setMessage(err?.response?.data?.detail || "Could not enroll in course.");
+      setMessageTone("error");
     }
   };
 
@@ -33,9 +41,16 @@ const Courses = () => {
   return (
     <div className="min-h-screen bg-slate-50 p-6">
       <div className="mx-auto max-w-5xl rounded-xl bg-white p-6 shadow">
-        <h1 className="mb-4 text-2xl font-semibold">Available Courses</h1>
-        {message && <p className="mb-3 text-sm text-blue-700">{message}</p>}
-        {error && <p className="text-red-600">Failed to load courses.</p>}
+        <PageHeader
+          title="Available Courses"
+          role={account?.role || "student"}
+          backTo="/"
+          backLabel="Back to Dashboard"
+        />
+        <StatusBanner message={message} tone={messageTone} />
+        {error && (
+          <StatusBanner message="Failed to load courses." tone="error" />
+        )}
         {!courses && !error && <p>Loading courses...</p>}
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -49,6 +64,15 @@ const Courses = () => {
               <p className="mb-3 text-xs text-slate-500">
                 Teacher: {course.author}
               </p>
+
+              <div className="mb-3">
+                <Link
+                  to={`/courses/${course.id}`}
+                  className="text-sm text-blue-700"
+                >
+                  View details
+                </Link>
+              </div>
 
               {canEnroll && (
                 <button
