@@ -18,7 +18,7 @@ beforeEach(() => {
   store.dispatch({ type: "auth/setLogout" });
 });
 
-// Test to ensure that the login page is rendered for unauthenticated users when they access the application.
+// Tests to ensure that the login page is rendered for unauthenticated users and the dashboard is rendered for authenticated users.
 test("renders login page for unauthenticated users", async () => {
   renderWithProviders();
   expect(

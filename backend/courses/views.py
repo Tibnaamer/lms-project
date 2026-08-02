@@ -9,7 +9,7 @@ from .models import Course, Enrollment
 from .permissions import IsCourseOwnerOrAdmin, IsTeacherOrAdmin, get_user_role
 from .serializers import CourseSerializer, EnrollmentSerializer
 
-# ViewSet for managing courses and enrollments and handling permissions based on user roles
+# ViewSet for managing courses, which enables the use of CRUD operations on courses.
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all().order_by("-date_created")
     serializer_class = CourseSerializer
@@ -19,8 +19,10 @@ class CourseViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAuthenticated]
         elif self.action == "create":
             permission_classes = [IsAuthenticated, IsTeacherOrAdmin]
-        elif self.action in {"update", "partial_update", "destroy", "enrollments"}:
-            permission_classes = [IsAuthenticated, IsCourseOwnerOrAdmin]
+        elif self.action in {"update", "partial_update", "destroy"}:
+            permission_classes = [IsAuthenticated, IsTeacherOrAdmin]
+        elif self.action == "enrollments":
+            permission_classes = [IsAuthenticated]
         else:
             permission_classes = [IsAuthenticated]
 

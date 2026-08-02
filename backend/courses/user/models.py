@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-# Create your models here.
+# The UserManager class is a custom manager used for the User model, providing the methods in order to create users/superusers.
 class UserManager(BaseUserManager):
 
     def create_user(self, username, email, password=None, **kwargs):
@@ -35,7 +35,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-
+# The User class is a custom user model that extends AbstractBaseUser/PermissionsMixin, provides fields for username, email, and flags.
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(db_index=True, max_length=255, unique=True)
     email = models.EmailField(db_index=True, unique=True)

@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
 
-# A viewset is a class-based view, able to handle all of the basic HTTP requests: GET, POST, PUT, DELETE 
+# UserViewSet is a class-based view, that is able to handle all of the basic HTTP requests such as: GET, POST, PUT, DELETE.
 class UserViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
     serializer_class = UserSerializer

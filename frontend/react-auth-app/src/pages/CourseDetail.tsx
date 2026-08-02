@@ -12,7 +12,7 @@ type RouteParams = {
   id: string;
 };
 
-// CourseDetail page component that displays detailed information about a specific course.
+// A course detail page component that displays detailed information about a specific course, as well as that it also allows students to enroll in the course.
 const CourseDetail = () => {
   const { id } = useParams<RouteParams>();
   const account = useSelector((state: RootState) => state.auth.account);
@@ -38,10 +38,10 @@ const CourseDetail = () => {
       setTone("error");
     }
   };
-  
+
   return (
-    <div className="min-h-screen bg-slate-50 p-6">
-      <div className="mx-auto max-w-4xl rounded-xl bg-white p-6 shadow">
+    <div className="min-h-screen bg-[#6ea89e] px-4 py-8 md:px-8 md:py-12">
+      <div className="mx-auto max-w-4xl rounded-xl bg-white px-6 py-8 shadow-[0_12px_30px_rgba(0,0,0,0.12)] md:px-8 md:py-10">
         <PageHeader
           title="Course Details"
           role={account?.role || "student"}
@@ -57,15 +57,17 @@ const CourseDetail = () => {
         {!course && !error && <p>Loading course...</p>}
 
         {course && (
-          <div className="space-y-3 rounded border p-4">
-            <h2 className="text-2xl font-semibold">{course.title}</h2>
+          <div className="space-y-3 rounded-md border border-slate-200 bg-slate-50 p-5">
+            <h2 className="text-2xl font-semibold text-slate-900">
+              {course.title}
+            </h2>
             <p className="text-slate-700">{course.description}</p>
             <p className="text-sm text-slate-500">Teacher: {course.author}</p>
 
             {canEnroll && (
               <button
                 onClick={handleEnroll}
-                className="rounded bg-blue-700 px-3 py-2 text-sm text-white"
+                className="rounded-md bg-[#39a99d] px-3 py-2 text-sm font-medium text-white transition hover:brightness-95"
               >
                 Enroll in this course
               </button>

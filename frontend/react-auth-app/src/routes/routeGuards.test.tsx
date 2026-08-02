@@ -6,7 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import PublicOnlyRoute from "./PublicOnlyRoute";
 import RoleBasedRoute from "./RoleBasedRoute";
 
-// Mock the useSelector hook from react-redux to control the authentication state in tests
+// A mock of the use selector hook from react-redux to control the authentication state in tests.
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useSelector: jest.fn(),

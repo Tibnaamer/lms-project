@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import StatusBanner from "../components/StatusBanner";
 import { authApi } from "../utils/api";
 
-// Function to extract error messages from API responses.
 const getErrorMessage = (err: any): string => {
   const data = err?.response?.data;
   const status = err?.response?.status;
@@ -49,8 +48,8 @@ const getErrorMessage = (err: any): string => {
   return "Could not create account.";
 };
 
-// Signup component that allows users to create a new account by providing a username, email, and password.
-// It deals with form submission, validation, and displays messages based on the success/failure of the account creation process.
+// A sign up page component allowing users to create a new account by providing a username, email, and password. It also deals with form submission, validation, 
+// and displays messages depending on the success/failure of the account creation process.
 const Signup = () => {
   const history = useHistory();
   const [message, setMessage] = useState("");
@@ -88,23 +87,33 @@ const Signup = () => {
     },
   });
 
-  // Render the Signup component, including the form for username, email, and password, as well as validation messages and a link to the login page.
+  // Renders the sign up form, including input fields for username, email, password, submit button and a link to the login page for current users.
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 p-4">
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow">
-        <h1 className="mb-4 text-2xl font-semibold">Create Account</h1>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#6ea89e] px-4 py-8 md:px-8 md:py-12">
+      <div className="absolute right-0 top-1/2 hidden h-[68vh] w-[34vw] max-w-[420px] -translate-y-1/2 bg-cover bg-center lg:block" />
 
-        <form onSubmit={formik.handleSubmit} className="space-y-3">
+      <div className="relative w-full max-w-[640px] bg-white px-6 py-8 shadow-[0_12px_30px_rgba(0,0,0,0.12)] md:px-10 md:py-12">
+        <h1 className="mb-8 text-4xl font-bold tracking-tight text-slate-900 md:mb-10 md:text-6xl">
+          Sign Up
+        </h1>
+
+        <form onSubmit={formik.handleSubmit} className="space-y-6">
           <div>
+            <label
+              htmlFor="username"
+              className="mb-2 block text-xl font-semibold text-slate-700 md:text-3xl"
+            >
+              Username
+            </label>
             <input
               id="username"
               name="username"
               type="text"
-              placeholder="Username"
+              placeholder="Enter your username"
               value={formik.values.username}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="w-full rounded border p-2"
+              className="h-12 w-full rounded-md border border-slate-200 bg-slate-100 px-4 text-base text-slate-900 shadow-sm outline-none transition focus:border-[#39a99d] md:h-14 md:text-lg"
             />
             {formik.touched.username && formik.errors.username && (
               <p className="mt-1 text-xs text-red-600">
@@ -114,15 +123,21 @@ const Signup = () => {
           </div>
 
           <div>
+            <label
+              htmlFor="email"
+              className="mb-2 block text-xl font-semibold text-slate-700 md:text-3xl"
+            >
+              Email
+            </label>
             <input
               id="email"
               name="email"
               type="email"
-              placeholder="Email"
+              placeholder="Enter your email"
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="w-full rounded border p-2"
+              className="h-12 w-full rounded-md border border-slate-200 bg-slate-100 px-4 text-base text-slate-900 shadow-sm outline-none transition focus:border-[#39a99d] md:h-14 md:text-lg"
             />
             {formik.touched.email && formik.errors.email && (
               <p className="mt-1 text-xs text-red-600">{formik.errors.email}</p>
@@ -130,15 +145,21 @@ const Signup = () => {
           </div>
 
           <div>
+            <label
+              htmlFor="password"
+              className="mb-2 block text-xl font-semibold text-slate-700 md:text-3xl"
+            >
+              Password
+            </label>
             <input
               id="password"
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder="Enter your password"
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="w-full rounded border p-2"
+              className="h-12 w-full rounded-md border border-slate-200 bg-slate-100 px-4 text-base text-slate-900 shadow-sm outline-none transition focus:border-[#39a99d] md:h-14 md:text-lg"
             />
             {formik.touched.password && formik.errors.password && (
               <p className="mt-1 text-xs text-red-600">
@@ -155,15 +176,15 @@ const Signup = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded bg-emerald-700 px-4 py-2 text-white"
+            className="mt-4 h-14 w-full rounded-md bg-[#39a99d] text-xl font-medium uppercase tracking-wide text-white transition hover:brightness-95 disabled:opacity-70 md:h-16 md:text-3xl"
           >
-            {loading ? "Creating..." : "Create account"}
+            {loading ? "Creating..." : "Submit"}
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-slate-700">
-          Already have an account?{" "}
-          <Link to="/login" className="text-blue-700">
+        <p className="mt-12 text-2xl font-normal text-slate-900 md:mt-16 md:text-4xl">
+          Or, Sign In{" "}
+          <Link to="/login" className="font-medium text-[#2f2fa2] underline">
             Login
           </Link>
         </p>

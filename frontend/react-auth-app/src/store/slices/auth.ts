@@ -9,7 +9,7 @@ type State = {
 
 const initialState: State = { token: null, refreshToken: null, account: null };
 
-// Slice that manages the authentication state
+// This auth slice manages the auth state of the application, which includes the access token, refresh token, and user account information.
 const authSlice = createSlice({
   name: "auth",
   initialState,

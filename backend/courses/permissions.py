@@ -1,7 +1,7 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from .models import UserProfile
 
-# Function to get the role of a user
+# Function used to get the role of a user depending on their UserProfile.
 def get_user_role(user):
     if not user or not getattr(user, 'is_authenticated', False):
         return None
@@ -14,7 +14,7 @@ def get_user_role(user):
     except UserProfile.DoesNotExist:
         return 'student'
 
-# Custom permission classes to check if the user is a teacher, admin or student
+# Sets custom permission classes for different user roles as well as object-level permissions.
 class IsTeacherOrAdmin(BasePermission):
     def has_permission(self, request, view):
         return get_user_role(request.user) in {'teacher', 'admin'}

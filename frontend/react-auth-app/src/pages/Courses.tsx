@@ -8,7 +8,7 @@ import axiosService, { fetcher } from "../utils/axios";
 import PageHeader from "../components/PageHeader";
 import StatusBanner from "../components/StatusBanner";
 
-// Courses page component that displays available courses and allows students to enroll.
+// A courses page component that displays a list of available courses and allows students to enroll on them.
 const Courses = () => {
   const [message, setMessage] = useState<string>("");
   const [messageTone, setMessageTone] = useState<"success" | "error" | "info">(
@@ -22,7 +22,7 @@ const Courses = () => {
     error,
   } = useSWR<CourseResponse[]>("/courses/", fetcher);
 
-  // Determine if the user can enroll in courses based on their role
+  // Determines if a user can enroll on a course based on their role (for example students can enroll, but teachers cannot).
   const canEnroll = (account?.role || "student") === "student";
 
   const handleEnroll = async (courseId: number) => {
@@ -37,10 +37,10 @@ const Courses = () => {
     }
   };
 
-  // Render the Courses component, including the list of available courses and an enroll button for students.
+  // Renders the courses page, including the list of available courses and an enroll button for the students.
   return (
-    <div className="min-h-screen bg-slate-50 p-6">
-      <div className="mx-auto max-w-5xl rounded-xl bg-white p-6 shadow">
+    <div className="min-h-screen bg-[#6ea89e] px-4 py-8 md:px-8 md:py-12">
+      <div className="mx-auto max-w-5xl rounded-xl bg-white px-6 py-8 shadow-[0_12px_30px_rgba(0,0,0,0.12)] md:px-8 md:py-10">
         <PageHeader
           title="Available Courses"
           role={account?.role || "student"}
@@ -54,10 +54,14 @@ const Courses = () => {
         {!courses && !error && <p>Loading courses...</p>}
 
         <div className="grid gap-4 sm:grid-cols-2">
-          {/* Render each course with an enroll button if the user can enroll. */}
           {courses?.map((course) => (
-            <div key={course.id} className="rounded border p-4">
-              <h2 className="text-lg font-semibold">{course.title}</h2>
+            <div
+              key={course.id}
+              className="rounded-md border border-slate-200 bg-slate-50 p-4"
+            >
+              <h2 className="text-xl font-semibold text-slate-900">
+                {course.title}
+              </h2>
               <p className="mb-2 text-sm text-slate-700">
                 {course.description}
               </p>
@@ -68,7 +72,7 @@ const Courses = () => {
               <div className="mb-3">
                 <Link
                   to={`/courses/${course.id}`}
-                  className="text-sm text-blue-700"
+                  className="text-sm font-medium text-[#2f2fa2] underline"
                 >
                   View details
                 </Link>
@@ -77,7 +81,7 @@ const Courses = () => {
               {canEnroll && (
                 <button
                   onClick={() => handleEnroll(course.id)}
-                  className="rounded bg-blue-700 px-3 py-2 text-sm text-white"
+                  className="rounded-md bg-[#39a99d] px-3 py-2 text-sm font-medium text-white transition hover:brightness-95"
                 >
                   Enroll
                 </button>

@@ -7,7 +7,7 @@ import axiosService, { fetcher } from "../utils/axios";
 import PageHeader from "../components/PageHeader";
 import StatusBanner from "../components/StatusBanner";
 
-// TeacherCourses component that allows teachers to manage their courses, including creating and deleting courses.
+// A teacher courses page component that enables teachers to manage courses, which includes creating, editing, deleting courses, as well as viewing currently enrolled students.
 const TeacherCourses = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -32,16 +32,16 @@ const TeacherCourses = () => {
     error,
   } = useSWR<CourseResponse[]>("/courses/", fetcher);
 
-  // Filter courses based on the user's role. Admins see all courses/teachers only see their own courses.
+  // Allows for the filtering of the list of courses based on the user's role, allowing admins/teachers to see all courses, students can only see their own courses.
   const visibleCourses = useMemo(() => {
     if (!courses) {
       return [];
     }
-    if (isAdmin) {
+    if (isAdmin || account?.role === "teacher") {
       return courses;
     }
     return courses.filter((c) => c.author === account?.username);
-  }, [courses, isAdmin, account?.username]);
+  }, [courses, isAdmin, account?.role, account?.username]);
 
   // Handle course creation by sending a POST request to the server and updating the course list on success.
   const handleCreate = async (event: FormEvent) => {
@@ -61,7 +61,7 @@ const TeacherCourses = () => {
     }
   };
 
-  // Start editing a course by setting the editing state and pre-filling the form with the course's current data.
+  // Handles course editing by sending a PUT request to the server and updating the course list on success.
   const startEditing = (course: CourseResponse) => {
     setEditingCourseId(course.id);
     setTitle(course.title);
@@ -98,7 +98,7 @@ const TeacherCourses = () => {
     }
   };
 
-  // Handle course deletion by sending a DELETE request to the server and updating the course list on success.
+  // Handles course deletion by sending a DELETE request to the server and updating the course list on success.
   const handleDelete = async (id: number) => {
     try {
       await axiosService.delete(`/courses/${id}/`);
@@ -130,10 +130,10 @@ const TeacherCourses = () => {
     }
   };
 
-  // Render the TeacherCourses component, including the course management form and the list of courses with options to edit, delete, and view enrollments.
+  // Renders the teacher courses page, including the form for creating/editing courses, the ability to edit, delete, and view enrollments for each course.
   return (
-    <div className="min-h-screen bg-slate-50 p-6">
-      <div className="mx-auto max-w-5xl rounded-xl bg-white p-6 shadow">
+    <div className="min-h-screen bg-[#6ea89e] px-4 py-8 md:px-8 md:py-12">
+      <div className="mx-auto max-w-5xl rounded-xl bg-white px-6 py-8 shadow-[0_12px_30px_rgba(0,0,0,0.12)] md:px-8 md:py-10">
         <PageHeader
           title="Teacher Course Management"
           role={account?.role || "teacher"}
@@ -144,35 +144,49 @@ const TeacherCourses = () => {
 
         <form
           onSubmit={editingCourseId ? handleUpdate : handleCreate}
-          className="mb-6 grid gap-3 rounded border p-4"
+          className="mb-6 grid gap-3 rounded-md border border-slate-200 bg-slate-50 p-4"
         >
+          <label
+            htmlFor="teacher-course-title"
+            className="text-sm font-medium text-slate-700"
+          >
+            Course title
+          </label>
           <input
+            id="teacher-course-title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder={editingCourseId ? "Edit course title" : "Course title"}
-            className="rounded border p-2"
+            className="rounded-md border border-slate-200 bg-white p-2"
             required
           />
+          <label
+            htmlFor="teacher-course-description"
+            className="text-sm font-medium text-slate-700"
+          >
+            Course description
+          </label>
           <textarea
+            id="teacher-course-description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder={
               editingCourseId ? "Edit course description" : "Course description"
             }
-            className="rounded border p-2"
+            className="rounded-md border border-slate-200 bg-white p-2"
             rows={4}
             required
           />
           <div className="flex gap-2">
             <button
-              className="w-fit rounded bg-emerald-700 px-4 py-2 text-white"
+              className="w-fit rounded-md bg-[#39a99d] px-4 py-2 text-sm font-medium text-white transition hover:brightness-95"
               type="submit"
             >
               {editingCourseId ? "Save Changes" : "Create Course"}
             </button>
             {editingCourseId && (
               <button
-                className="w-fit rounded bg-slate-500 px-4 py-2 text-white"
+                className="w-fit rounded-md bg-slate-500 px-4 py-2 text-sm font-medium text-white transition hover:brightness-95"
                 type="button"
                 onClick={cancelEditing}
               >
@@ -191,9 +205,9 @@ const TeacherCourses = () => {
         <div className="space-y-3">
           {visibleCourses.map((course) => (
             <React.Fragment key={course.id}>
-              <div className="flex items-start justify-between rounded border p-4">
+              <div className="flex items-start justify-between rounded-md border border-slate-200 bg-slate-50 p-4">
                 <div>
-                  <p className="font-medium">{course.title}</p>
+                  <p className="font-medium text-slate-900">{course.title}</p>
                   <p className="text-sm text-slate-700">{course.description}</p>
                   <p className="text-xs text-slate-500">
                     Author: {course.author}
@@ -201,19 +215,19 @@ const TeacherCourses = () => {
                 </div>
                 <div className="flex flex-col gap-2">
                   <button
-                    className="rounded bg-amber-600 px-3 py-2 text-sm text-white"
+                    className="rounded-md bg-amber-600 px-3 py-2 text-sm font-medium text-white transition hover:brightness-95"
                     onClick={() => startEditing(course)}
                   >
                     Edit
                   </button>
                   <button
-                    className="rounded bg-red-700 px-3 py-2 text-sm text-white"
+                    className="rounded-md bg-[#b23b3b] px-3 py-2 text-sm font-medium text-white transition hover:brightness-95"
                     onClick={() => handleDelete(course.id)}
                   >
                     Delete
                   </button>
                   <button
-                    className="rounded bg-blue-700 px-3 py-2 text-sm text-white"
+                    className="rounded-md bg-[#2f2fa2] px-3 py-2 text-sm font-medium text-white transition hover:brightness-95"
                     onClick={() => handleLoadEnrollments(course.id)}
                   >
                     {loadingEnrollmentsFor === course.id
@@ -224,7 +238,7 @@ const TeacherCourses = () => {
               </div>
 
               {enrollmentsByCourse[course.id] && (
-                <div className="mt-2 rounded border border-dashed p-3">
+                <div className="mt-2 rounded-md border border-dashed border-slate-300 bg-white p-3">
                   <p className="mb-2 text-sm font-medium">Enrolled Students</p>
                   {enrollmentsByCourse[course.id].length === 0 ? (
                     <p className="text-sm text-slate-600">

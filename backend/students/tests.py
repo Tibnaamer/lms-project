@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from courses.models import Course
 from .models import Student, StudentProfile, Enrollment
 
-
+# This smoke tests class covers scenarios such as creating students/enrollments, user registration/login, role-based access control,
+# as well as ensuring that duplicate enrollments are rejected.
 class StudentsSmokeTests(TestCase):
     def setUp(self):
         self.User = get_user_model()

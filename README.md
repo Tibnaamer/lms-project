@@ -10,19 +10,21 @@ root/
 │   ├── config/
 │   ├── courses/
 │   ├── students/
+│   ├── .env.example
 │   ├── db.sqlite3
 │   └── manage.py
 ├── frontend/
 │   └── react-auth-app/
-│       ├── build/
 │       ├── node_modules/
 │       ├── public/
 │       ├── src/
 │       ├── craco.config.js
 │       ├── package-lock.json
 │       ├── package.json
+│       ├── postcss.config.js
 │       ├── tailwind.config.js
-│       └── tsconfig.json
+│       ├── tsconfig.json
+│       └── yarn.lock
 ├── .gitignore
 └── README.md
 ```
@@ -63,18 +65,36 @@ cd backend
 #### Frontend
 
 ```bash
-cd frontend
-cd react-auth-app
-npm test -- --watch=false --runInBand
+cd frontend/react-auth-app
+npx craco test --watchAll=false --runInBand
 ```
+
+## API Endpoints
+
+The Base URL: `http://127.0.0.1:8000/api`
+
+- `POST /auth/register/` creates a user account.
+- `POST /auth/login/` returns JWT access and refresh tokens.
+- `POST /auth/refresh/` refreshes an access token.
+- `GET /courses/` lists courses (authenticated users).
+- `GET /courses/{id}/` retrieves course details.
+- `POST /courses/` creates a course (teacher/admin).
+- `PUT /courses/{id}/` updates a course (teacher/admin).
+- `DELETE /courses/{id}/` deletes a course (teacher/admin).
+- `GET /courses/my-enrollments/` lists the current user's enrollments.
+- `POST /courses/{id}/enrollments/` enrolls the current student in a course.
+- `GET /courses/{id}/enrollments/` lists enrollments for a course (teacher/admin, with owner fallback logic).
+- `GET /user/` lists all users for admin, otherwise returns the current user only.
+- `POST /user/` creates a user account as teacher or student (admin only).
+- `PATCH /user/{id}/` updates a user's active status or role (admin only).
 
 ## Accessibility
 
-- Accessibility WIP.
+- WIP
 
 ## Deployment
 
-- Deployment WIP.
+- WIP
 
 ## 🛠️ Setup Instructions
 
@@ -82,6 +102,7 @@ npm test -- --watch=false --runInBand
 
 ```bash
 cd backend
+copy .env.example .env
 python manage.py migrate
 python manage.py runserver
 ```
@@ -96,7 +117,7 @@ npm start
 
 ## Credits/Validation
 
-### Code validation was carried out using the following tools and methods:
+#### Code validation to be carried out using the following tools and methods:
 
 - [HTML Validator](https://validator.w3.org/nu/#textarea)
 - [CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input)

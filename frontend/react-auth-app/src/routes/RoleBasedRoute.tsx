@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { UserRole } from "../types";
 
-// Component checks if the user is authenticated as well as has the required role to access the route.
+// This role based route component restricts the access to certain routes based on the user's role, for example if a user does not have the required role, 
+// they will be redirected to the dashboard or login page.
 type RoleBasedRouteProps = RouteProps & {
   allowedRoles: UserRole[];
 };

@@ -6,7 +6,7 @@ from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from courses.user.auth.serializers import LoginSerializer, RegisterSerializer
 from courses.user.serializers import UserSerializer
 
-# ViewSets for user authentication
+# LoginViewSet is for user login
 class LoginViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
@@ -25,7 +25,7 @@ class LoginViewSet(viewsets.ViewSet):
             status=status.HTTP_200_OK,
         )
 
-# ViewSet for user registration
+# RegistrationViewSet is for user registration
 class RegistrationViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 
@@ -35,7 +35,7 @@ class RegistrationViewSet(viewsets.ViewSet):
         user = serializer.save()
         return Response({'user': UserSerializer(user).data}, status=status.HTTP_201_CREATED)
 
-# ViewSet for refreshing JWT tokens
+# RefreshViewSet is for refreshing JWT tokens and is used for obtaining new access tokens.
 class RefreshViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
 

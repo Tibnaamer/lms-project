@@ -15,7 +15,8 @@ import RoleBasedRoute from "./routes/RoleBasedRoute";
 import AdminUsers from "./pages/AdminUsers";
 import PublicOnlyRoute from "./routes/PublicOnlyRoute";
 
-// Main App component that sets up routing and state management for the application.
+// The main app component that sets up the routing for the app through the use of React Router in order to define routes for different pages and applies route guards to 
+// restrict access based on authentication and user roles.
 export default function App() {
   return (
     <Provider store={store}>
