@@ -148,8 +148,19 @@ _default_cors_origins = [
     'http://127.0.0.1:3000',
     'http://localhost:3001',
     'http://127.0.0.1:3001',
+    'http://localhost:3002',
+    'http://127.0.0.1:3002',
+    'http://localhost:3003',
+    'http://127.0.0.1:3003',
 ]
-CORS_ALLOWED_ORIGINS = _env_list('DJANGO_CORS_ALLOWED_ORIGINS', _default_cors_origins)
+_cors_origins_from_env = _env_list('DJANGO_CORS_ALLOWED_ORIGINS', [])
+CORS_ALLOWED_ORIGINS = sorted(set(_default_cors_origins + _cors_origins_from_env))
+
+if DEBUG:
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        r'^http://localhost:\d+$',
+        r'^http://127\.0\.0\.1:\d+$',
+    ]
 
 if not DEBUG:
     SESSION_COOKIE_SECURE = True

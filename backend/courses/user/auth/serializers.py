@@ -7,12 +7,14 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        email = attrs.get('email')
+        identifier = (attrs.get('email') or '').strip()
         password = attrs.get('password')
 
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
+        user = User.objects.filter(email__iexact=identifier).first()
+        if user is None:
+            user = User.objects.filter(username__iexact=identifier).first()
+
+        if user is None:
             raise serializers.ValidationError('Invalid credentials')
 
         if not user.check_password(password):

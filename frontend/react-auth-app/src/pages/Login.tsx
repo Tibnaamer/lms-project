@@ -7,6 +7,30 @@ import authSlice from "../store/slices/auth";
 import StatusBanner from "../components/StatusBanner";
 import { authApi } from "../utils/api";
 
+const extractErrorMessage = (err: any): string => {
+  const data = err?.response?.data;
+  if (!data) {
+    return "Cannot reach backend API. Make sure the Django server is running and CORS allows this frontend port.";
+  }
+
+  if (typeof data.detail === "string") {
+    return data.detail;
+  }
+
+  if (
+    Array.isArray(data.non_field_errors) &&
+    data.non_field_errors.length > 0
+  ) {
+    return String(data.non_field_errors[0]);
+  }
+
+  if (typeof data === "string") {
+    return data;
+  }
+
+  return "Login failed";
+};
+
 // is a login component allowing users to log in by providing their email/password. It also deals with form submission, validation.
 function Login() {
   const [message, setMessage] = useState("");
@@ -30,7 +54,7 @@ function Login() {
       })
       .catch((err) => {
         setLoading(false);
-        setMessage(err?.response?.data?.detail?.toString() || "Login failed");
+        setMessage(extractErrorMessage(err));
       });
   };
 

@@ -15,6 +15,7 @@ root/
 │   └── manage.py
 ├── frontend/
 │   └── react-auth-app/
+│       ├── build/
 │       ├── node_modules/
 │       ├── public/
 │       ├── src/
@@ -23,8 +24,7 @@ root/
 │       ├── package.json
 │       ├── postcss.config.js
 │       ├── tailwind.config.js
-│       ├── tsconfig.json
-│       └── yarn.lock
+│       └── tsconfig.json
 ├── .gitignore
 └── README.md
 ```
