@@ -10,12 +10,12 @@ root/
 │   ├── config/
 │   ├── courses/
 │   ├── students/
+│   ├── .env
 │   ├── .env.example
 │   ├── db.sqlite3
 │   └── manage.py
 ├── frontend/
 │   └── react-auth-app/
-│       ├── build/
 │       ├── node_modules/
 │       ├── public/
 │       ├── src/
@@ -53,6 +53,30 @@ root/
 - Django was used to build the backend
 - React was used to build the frontend
 
+## Dashboard Front-End Wireframe
+
+#### Below is an example of what I envisioned my Dashboard Wireframe to look like.
+
+![Wireframe](.vscode/Images/Wireframe.png)
+
+## Technical Architecture
+
+#### Data Flow and Authentication
+
+1. User authenticates via the frontend.
+2. Backend then verifies user credentials and returns JWT tokens as well as user profile data.
+3. Frontend stores auth state and role.
+4. Protected requests include an access token.
+5. Backend validates token/permissions and then runs serializer/model operations and returns JSON.
+
+#### Navigation and Authentication
+
+1. React Router controls the page navigation.
+2. Route guards restrict page access by authentication state and role.
+3. Redux stores the authenticated user state and tokens.
+4. Axios client sends out API requests with JWT auth headers.
+5. Pages use the API responses in order to render role-specific actions be it enrolment, managing courses or managing users.
+
 ## Testing
 
 #### Backend
@@ -82,17 +106,19 @@ The Base URL: `http://127.0.0.1:8000/api`
 - `PUT /courses/{id}/` updates a course (teacher/admin).
 - `DELETE /courses/{id}/` deletes a course (teacher/admin).
 - `GET /courses/my-enrollments/` lists the current user's enrollments.
-- `POST /courses/{id}/enrollments/` enrolls the current student in a course.
+- `POST /courses/{id}/enrollments/` enrols the current student in a course.
 - `GET /courses/{id}/enrollments/` lists enrollments for a course (teacher/admin, with owner fallback logic).
 - `GET /user/` lists all users for admin, otherwise returns the current user only.
 - `POST /user/` creates a user account as teacher or student (admin only).
 - `PATCH /user/{id}/` updates a user's active status or role (admin only).
 
-## Accessibility
+## Deployment
+
+#### Frontend
 
 - WIP
 
-## Deployment
+#### Backend
 
 - WIP
 
@@ -117,7 +143,7 @@ npm start
 
 ## Credits/Validation
 
-#### Code validation to be carried out using the following tools and methods:
+#### Code validation carried out using the following tools and methods:
 
 - [HTML Validator](https://validator.w3.org/nu/#textarea)
 - [CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input)
