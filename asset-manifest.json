@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/lms-project/static/css/main.98ae3ca7.css",
+    "main.js": "/lms-project/static/js/main.21c4f69d.js",
+    "static/js/453.db0f44c1.chunk.js": "/lms-project/static/js/453.db0f44c1.chunk.js",
+    "static/media/axios.cjs": "/lms-project/static/media/axios.d91c71c4d74a8b791d20.cjs",
+    "index.html": "/lms-project/index.html",
+    "main.98ae3ca7.css.map": "/lms-project/static/css/main.98ae3ca7.css.map",
+    "main.21c4f69d.js.map": "/lms-project/static/js/main.21c4f69d.js.map",
+    "453.db0f44c1.chunk.js.map": "/lms-project/static/js/453.db0f44c1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.98ae3ca7.css",
+    "static/js/main.21c4f69d.js"
+  ]
+}
