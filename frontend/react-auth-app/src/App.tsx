@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { HashRouter as Router, Switch } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
@@ -15,7 +15,7 @@ import RoleBasedRoute from "./routes/RoleBasedRoute";
 import AdminUsers from "./pages/AdminUsers";
 import PublicOnlyRoute from "./routes/PublicOnlyRoute";
 
-// The main app component that sets up the routing for the app through the use of React Router in order to define routes for different pages and applies route guards to 
+// The main app component that sets up the routing for the app through the use of React Router in order to define routes for different pages and applies route guards to
 // restrict access based on authentication and user roles.
 export default function App() {
   return (

@@ -16,6 +16,7 @@ root/
 │   └── manage.py
 ├── frontend/
 │   └── react-auth-app/
+│       ├── build/
 │       ├── node_modules/
 │       ├── public/
 │       ├── src/
@@ -26,6 +27,8 @@ root/
 │       ├── tailwind.config.js
 │       └── tsconfig.json
 ├── .gitignore
+├── package-lock.json
+├── package.json
 └── README.md
 ```
 
@@ -81,16 +84,16 @@ root/
 
 #### Backend
 
-```bash
+```powershell
 cd backend
-../.venv/Scripts/python.exe manage.py test
+C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py test
 ```
 
 #### Frontend
 
-```bash
+```powershell
 cd frontend/react-auth-app
-npx craco test --watchAll=false --runInBand
+$env:CI='true'; npx craco test --watchAll=false --runInBand
 ```
 
 ## API Endpoints
@@ -116,7 +119,11 @@ The Base URL: `http://127.0.0.1:8000/api`
 
 #### Frontend
 
-- WIP
+#### My React App was deployed to GitHub Pages through the use of the following commands:
+
+1. npm install gh-pages --save-dev
+2. Updating my package.json files
+3. npm run deploy
 
 #### Backend
 
@@ -126,16 +133,16 @@ The Base URL: `http://127.0.0.1:8000/api`
 
 #### 🔹 Backend (Django)
 
-```bash
+```powershell
 cd backend
 copy .env.example .env
-python manage.py migrate
-python manage.py runserver
+C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py migrate
+C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py runserver
 ```
 
 #### 🔹 Frontend (React)
 
-```bash
+```powershell
 cd frontend/react-auth-app
 npm install
 npm start
