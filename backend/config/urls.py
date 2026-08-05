@@ -14,13 +14,14 @@ from rest_framework.reverse import reverse
 def api_root(request, format=None):
     return Response({
         'auth': {
-            'login':    reverse('courses-api:auth-login-list',    request=request),
-            'register': reverse('courses-api:auth-register-list', request=request),
-            'refresh':  reverse('courses-api:auth-refresh-list',  request=request),
+            'login':         reverse('courses-api:auth-login-list',    request=request),
+            'register':      reverse('courses-api:auth-register-list', request=request),
+            'refresh':       reverse('courses-api:auth-refresh-list',  request=request),
+            'browser_login': reverse('rest_framework:login',           request=request),
         },
-        'users':    reverse('courses-api:user-list', request=request),
-        'courses':  reverse('course-list',           request=request),
-        'students': reverse('students-api:student-list', request=request),
+        'users':    reverse('courses-api:user-list',      request=request),
+        'courses':  reverse('course-list',                request=request),
+        'students': reverse('students-api:student-list',  request=request),
     })
 
 urlpatterns = [
