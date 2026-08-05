@@ -170,6 +170,12 @@ npm install
 npm start
 ```
 
+## Areas of improvement
+
+* My file structure would benefit from being more accurately labelled and located
+* I encountered hurdles with the backend regarding authentication and authorisation
+* Additional features such as being able to add questions to the courses 
+
 ## Credits/Validation
 
 #### Code validation carried out using the following tools and methods:
