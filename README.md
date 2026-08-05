@@ -2,8 +2,9 @@
 
 This project is a full-stack Learning Management System (LMS) built with **Django** for the backend and **React** for the frontend. It is designed to support students, teachers, and administrators through authentication, course management, and role-based access.
 
-Frontend React Link -
-Backend Django Link -
+
+* [Frontend React Link](https://tibnaamer.github.io/lms-project/#/login)
+* [Backend Django Link](https://tibnaamer.pythonanywhere.com/api/)
 
 ## 📁 Project Structure
 
@@ -63,7 +64,7 @@ root/
 
 #### Below is an example of what I envisioned my Dashboard Wireframe to look like.
 
-![Wireframe](.vscode/Images/Wireframe.png)
+> Wireframe image stored locally in `.vscode/Images/Wireframe.png` (not tracked by git).
 
 ## Technical Architecture
 
@@ -89,7 +90,7 @@ root/
 
 ```powershell
 cd backend
-C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py test
+python manage.py test
 ```
 
 #### Frontend
@@ -101,7 +102,8 @@ $env:CI='true'; npx craco test --watchAll=false --runInBand
 
 ## API Endpoints
 
-The Base URL: `http://127.0.0.1:8000/api`
+Production Base URL: `https://tibnaamer.pythonanywhere.com/api`
+Local Base URL: `http://127.0.0.1:8000/api`
 
 - `POST /auth/register/` creates a user account.
 - `POST /auth/login/` returns JWT access and refresh tokens.
@@ -143,7 +145,7 @@ Local Windows:
 
 ```powershell
 cd backend
-C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py ensure_superuser --no-input
+python manage.py ensure_superuser --no-input
 ```
 
 PythonAnywhere:
@@ -160,8 +162,8 @@ python manage.py ensure_superuser
 ```powershell
 cd backend
 copy .env.example .env
-C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py migrate
-C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py runserver
+python manage.py migrate
+python manage.py runserver
 ```
 
 #### 🔹 Frontend (React)

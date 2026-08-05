@@ -43,7 +43,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-fyf-t-d0kk*)ovc7$s9
 
 DEBUG = _env_bool('DJANGO_DEBUG', True)
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = _env_list('DJANGO_ALLOWED_HOSTS', ['localhost', '127.0.0.1'])
 
 INSTALLED_APPS = [
     'courses.user.apps.UserConfig',

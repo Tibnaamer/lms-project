@@ -7,8 +7,8 @@
     "deploy": "gh-pages -d frontend/react-auth-app/build",
     "build": "npm --prefix frontend/react-auth-app run build",
     "test": "npm --prefix frontend/react-auth-app run test -- --watchAll=false --runInBand",
-    "backend:test": "cd backend && C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py test",
-    "backend:start": "cd backend && C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py runserver",
+    "backend:test": "cd backend && python manage.py test",
+    "backend:start": "cd backend && python manage.py runserver",
     "frontend:start": "npm --prefix frontend/react-auth-app start"
   },
   "devDependencies": {
