@@ -2,9 +2,8 @@
 
 This project is a full-stack Learning Management System (LMS) built with **Django** for the backend and **React** for the frontend. It is designed to support students, teachers, and administrators through authentication, course management, and role-based access.
 
-
-* [Frontend React Link](https://tibnaamer.github.io/lms-project/#/login)
-* [Backend Django Link](https://tibnaamer.pythonanywhere.com/api/)
+- [Frontend React Link](https://tibnaamer.github.io/lms-project/#/login)
+- [Backend Django Link](https://tibnaamer.pythonanywhere.com/api/)
 
 ## 📁 Project Structure
 
@@ -14,14 +13,10 @@ root/
 │   ├── config/
 │   ├── courses/
 │   ├── students/
-│   ├── .env
 │   ├── .env.example
-│   ├── db.sqlite3
 │   └── manage.py
 ├── frontend/
 │   └── react-auth-app/
-│       ├── build/
-│       ├── node_modules/
 │       ├── public/
 │       ├── src/
 │       ├── craco.config.js
@@ -59,12 +54,13 @@ root/
 - CSS was used to style and edit the layout of my site
 - Django was used to build the backend
 - React was used to build the frontend
+- PythonAnywhere was used t o deploy Django backend
 
 ## Dashboard Front-End Wireframe
 
 #### Below is an example of what I envisioned my Dashboard Wireframe to look like.
 
-> Wireframe image stored locally in `.vscode/Images/Wireframe.png` (not tracked by git).
+- ![Wireframe](.vscode/Images/Wireframe.png)
 
 ## Technical Architecture
 
