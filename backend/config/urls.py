@@ -26,6 +26,7 @@ def api_root(request, format=None):
 urlpatterns = [
     path('', RedirectView.as_view(url='/api/', permanent=False)),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
     path('api/', api_root, name='api-root'),
     path('api/', include(('courses.user.routers', 'courses'), namespace='courses-api')),
     path('api/', include('courses.urls')),
