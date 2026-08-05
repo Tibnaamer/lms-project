@@ -3,10 +3,30 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+
+# API root view
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def api_root(request, format=None):
+    return Response({
+        'auth': {
+            'login':    reverse('auth-login-list',    request=request),
+            'register': reverse('auth-register-list', request=request),
+            'refresh':  reverse('auth-refresh-list',  request=request),
+        },
+        'users':    reverse('user-list',   request=request),
+        'courses':  reverse('course-list', request=request),
+        'students': reverse('student-list', request=request),
+    })
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/api/', permanent=False)),
     path('admin/', admin.site.urls),
+    path('api/', api_root, name='api-root'),
     path('api/', include(('courses.user.routers', 'courses'), namespace='courses-api')),
     path('api/', include('courses.urls')),
     path('api/', include(('students.urls', 'students'), namespace='students-api')),
