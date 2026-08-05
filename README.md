@@ -2,6 +2,9 @@
 
 This project is a full-stack Learning Management System (LMS) built with **Django** for the backend and **React** for the frontend. It is designed to support students, teachers, and administrators through authentication, course management, and role-based access.
 
+Frontend React Link -
+Backend Django Link -
+
 ## 📁 Project Structure
 
 ```text
@@ -136,9 +139,18 @@ The Base URL: `http://127.0.0.1:8000/api`
 2. Run database migrations.
 3. Seed/promote the admin account (idempotent):
 
+Local Windows:
+
 ```powershell
 cd backend
 C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py ensure_superuser --no-input
+```
+
+PythonAnywhere:
+
+```powershell
+cd ~/lms-project/backend
+python manage.py ensure_superuser
 ```
 
 ## 🛠️ Setup Instructions
