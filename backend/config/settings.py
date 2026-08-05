@@ -151,6 +151,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_REDIRECT_URL = '/api/'
+
 _default_cors_origins = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
