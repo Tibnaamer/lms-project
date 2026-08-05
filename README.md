@@ -109,7 +109,7 @@ The Base URL: `http://127.0.0.1:8000/api`
 - `PUT /courses/{id}/` updates a course (teacher/admin).
 - `DELETE /courses/{id}/` deletes a course (teacher/admin).
 - `GET /courses/my-enrollments/` lists the current user's enrollments.
-- `POST /courses/{id}/enrollments/` enrols the current student in a course.
+- `POST /courses/{id}/enrollments/` enrols the current student in a course (admins may also enrol).
 - `GET /courses/{id}/enrollments/` lists enrollments for a course (teacher/admin, with owner fallback logic).
 - `GET /user/` lists all users for admin, otherwise returns the current user only.
 - `POST /user/` creates a user account as teacher or student (admin only).
@@ -127,7 +127,19 @@ The Base URL: `http://127.0.0.1:8000/api`
 
 #### Backend
 
-- WIP
+#### The Django backend was deployed on PythonAnywhere using the following steps:
+
+1. Set the following backend environment variables in your desired hosting platform:
+   - `DJANGO_SUPERUSER_EMAIL`
+   - `DJANGO_SUPERUSER_USERNAME`
+   - `DJANGO_SUPERUSER_PASSWORD`
+2. Run database migrations.
+3. Seed/promote the admin account (idempotent):
+
+```powershell
+cd backend
+C:/Users/2000S/AppData/Local/Python/pythoncore-3.14-64/python.exe manage.py ensure_superuser --no-input
+```
 
 ## 🛠️ Setup Instructions
 
